@@ -1,3 +1,6 @@
 R_DEF: Internal format may change without notice
 local
 drawable ic_zflip_logo
+string accessibility_description
+string app_name
+xml accessibility_service_config
