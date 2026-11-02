@@ -1,3 +1,5 @@
+import java.io.File
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -11,8 +13,31 @@ android {
         applicationId = "com.lokaovida.zflip.covermirror"
         minSdk = 26
         targetSdk = 34
-        versionCode = 20
-        versionName = "2.0"
+        versionCode = 30
+        versionName = "3.0"
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = File(rootDir, "release.jks")
+            storePassword = "zflip123"
+            keyAlias = "zflipkey"
+            keyPassword = "zflip123"
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
+            enableV4Signing = true
+        }
+    }
+
+    buildTypes {
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("release")
+        }
+        getByName("release") {
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
+        }
     }
 
     buildFeatures {
