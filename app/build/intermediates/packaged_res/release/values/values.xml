@@ -2,8 +2,8 @@
 <resources>
     <string name="accessibility_description">Serviço de Multitarefas e Gestos para a Tela de Capa do Galaxy Z Flip</string>
     <string name="app_name">ZFlip Cover Mirror</string>
-    <style name="Theme.ZFlipMirror" parent="@android:style/Theme.DeviceDefault.NoActionBar">
+    <style name="Theme.ZFlipMirror" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
     </style>
 </resources>

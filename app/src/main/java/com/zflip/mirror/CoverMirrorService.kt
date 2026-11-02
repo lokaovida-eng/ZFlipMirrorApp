@@ -1,11 +1,11 @@
 package com.zflip.mirror
 
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
@@ -28,9 +28,16 @@ class CoverMirrorService : Service() {
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .build()
 
-        startForeground(NOTIFICATION_ID, notification)
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+            } else {
+                startForeground(NOTIFICATION_ID, notification)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
-        // Se o Botão 2 estiver ativado, adquire o WakeLock para impedir que a tela de capa apague ao abrir o Z Flip
         if (keepCoverOn) {
             acquireWakeLock()
         } else {
@@ -51,7 +58,7 @@ class CoverMirrorService : Service() {
                 )
             }
             if (wakeLock?.isHeld == false) {
-                wakeLock?.acquire(12 * 60 * 60 * 1000L) // Mantém aceso por até 12 horas seguidas
+                wakeLock?.acquire(12 * 60 * 60 * 1000L)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -91,19 +98,27 @@ class CoverMirrorService : Service() {
         private const val EXTRA_KEEP_COVER_ON = "extra_keep_cover_on"
 
         fun startMirroring(context: Context, keepCoverOn: Boolean = false) {
-            val intent = Intent(context, CoverMirrorService::class.java).apply {
-                putExtra(EXTRA_KEEP_COVER_ON, keepCoverOn)
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(intent)
-            } else {
-                context.startService(intent)
+            try {
+                val intent = Intent(context, CoverMirrorService::class.java).apply {
+                    putExtra(EXTRA_KEEP_COVER_ON, keepCoverOn)
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(intent)
+                } else {
+                    context.startService(intent)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
 
         fun stopMirroring(context: Context) {
-            val intent = Intent(context, CoverMirrorService::class.java)
-            context.stopService(intent)
+            try {
+                val intent = Intent(context, CoverMirrorService::class.java)
+                context.stopService(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }
