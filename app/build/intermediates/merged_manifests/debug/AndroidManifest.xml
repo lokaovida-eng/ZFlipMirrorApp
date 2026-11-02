@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zflip.mirror"
-    android:versionCode="10"
-    android:versionName="1.0" >
+    package="com.lokaovida.zflip.covermirror"
+    android:versionCode="20"
+    android:versionName="2.0" >
 
     <uses-sdk
         android:minSdkVersion="26"
@@ -15,10 +15,10 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <permission
-        android:name="com.zflip.mirror.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.lokaovida.zflip.covermirror.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.zflip.mirror.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="com.lokaovida.zflip.covermirror.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
         android:allowBackup="true"
@@ -58,7 +58,7 @@
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.zflip.mirror.androidx-startup"
+            android:authorities="com.lokaovida.zflip.covermirror.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"

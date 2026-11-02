@@ -4,15 +4,15 @@ plugins {
 }
 
 android {
-    namespace = "com.zflip.mirror"
+    namespace = "com.lokaovida.zflip.covermirror"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.zflip.mirror"
+        applicationId = "com.lokaovida.zflip.covermirror"
         minSdk = 26
         targetSdk = 34
-        versionCode = 10
-        versionName = "1.0"
+        versionCode = 20
+        versionName = "2.0"
     }
 
     buildFeatures {
