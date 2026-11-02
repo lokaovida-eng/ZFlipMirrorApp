@@ -9,7 +9,6 @@
         android:targetSdkVersion="34" />
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -28,25 +27,42 @@
         android:label="ZFlip Cover Mirror"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZFlipMirror" >
+
+        <!-- Samsung Galaxy Z Flip 5 / 6 / 7 Cover Display MultiStar Meta-Data -->
+        <meta-data
+            android:name="com.samsung.android.foldable.cover.display.support"
+            android:value="true" />
+        <meta-data
+            android:name="com.samsung.android.activity.showOnCover"
+            android:value="true" />
+
         <activity
             android:name="com.zflip.mirror.MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:exported="true"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ZFlipMirror" >
+            <meta-data
+                android:name="com.samsung.android.foldable.cover.display.support"
+                android:value="true" />
+            <meta-data
+                android:name="com.samsung.android.activity.showOnCover"
+                android:value="true" />
+            <meta-data
+                android:name="com.samsung.android.multistar.cover.display.support"
+                android:value="true" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.SECONDARY_HOME" />
             </intent-filter>
         </activity>
 
         <service
             android:name="com.zflip.mirror.CoverMirrorService"
-            android:exported="false"
-            android:foregroundServiceType="specialUse" >
-            <property
-                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="ZFlip Cover Screen Mirroring Utility" />
-        </service>
+            android:exported="false" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"
