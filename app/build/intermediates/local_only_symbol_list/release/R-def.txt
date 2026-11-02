@@ -3,4 +3,5 @@ local
 drawable ic_zflip_logo
 string accessibility_description
 string app_name
+style Theme.ZFlipMirror
 xml accessibility_service_config

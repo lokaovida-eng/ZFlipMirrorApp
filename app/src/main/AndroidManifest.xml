@@ -11,11 +11,12 @@
         android:icon="@drawable/ic_zflip_logo"
         android:label="ZFlip Cover Mirror"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
+        android:theme="@style/Theme.ZFlipMirror">
 
         <activity
             android:name="com.zflip.mirror.MainActivity"
             android:exported="true"
+            android:theme="@style/Theme.ZFlipMirror"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
