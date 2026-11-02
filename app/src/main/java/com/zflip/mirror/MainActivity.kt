@@ -16,8 +16,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -40,6 +42,9 @@ class MainActivity : ComponentActivity() {
             enableEdgeToEdge()
         } catch (_: Exception) {}
 
+        // Impede que a tela apague automaticamente
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         setContent {
             MaterialTheme {
                 Surface(
@@ -57,7 +62,12 @@ class MainActivity : ComponentActivity() {
 fun ZFlipMirrorScreen() {
     val context = LocalContext.current
     val haptics = LocalHapticFeedback.current
+
+    // Estado do Botão 1: Espelhamento Direto da Tela Principal na Capa
     var isMirroringActive by remember { mutableStateOf(false) }
+
+    // Estado do Botão 2: Manter a Tela de Capa Ligada quando o Z Flip for ABERTO
+    var keepCoverOnWhenOpened by remember { mutableStateOf(false) }
 
     fun triggerHaptic() {
         try {
@@ -65,7 +75,6 @@ fun ZFlipMirrorScreen() {
         } catch (_: Exception) {}
     }
 
-    // Gerenciador de Displays para detectar a Tela de Capa do Galaxy Z Flip
     val displayManager = remember {
         context.getSystemService(Context.DISPLAY_SERVICE) as? DisplayManager
     }
@@ -76,10 +85,16 @@ fun ZFlipMirrorScreen() {
 
     val hasCoverDisplay = displays.isNotEmpty()
 
-    val buttonColor by animateColorAsState(
+    val button1Color by animateColorAsState(
         targetValue = if (isMirroringActive) Color(0xFF00FF66) else Color(0xFF00F0FF),
         animationSpec = tween(durationMillis = 300),
-        label = "ButtonColorAnim"
+        label = "Button1ColorAnim"
+    )
+
+    val button2Color by animateColorAsState(
+        targetValue = if (keepCoverOnWhenOpened) Color(0xFFFFD700) else Color(0xFFFF3366),
+        animationSpec = tween(durationMillis = 300),
+        label = "Button2ColorAnim"
     )
 
     Column(
@@ -90,130 +105,229 @@ fun ZFlipMirrorScreen() {
                     colors = listOf(Color(0xFF0F172A), Color(0xFF020617))
                 )
             )
-            .padding(24.dp),
+            .verticalScroll(rememberScrollState())
+            .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         // Cabeçalho Principal
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier.padding(top = 8.dp)
         ) {
             Text(
                 text = "📱 ZFLIP COVER MIRROR",
-                fontSize = 22.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Black,
                 color = Color(0xFF00F0FF),
                 letterSpacing = 2.sp
             )
 
             Text(
-                text = "Espelhamento Direto da Tela Principal na Tela de Capa",
-                fontSize = 12.sp,
+                text = "Espelhamento Direto da Tela Grande na Tela de Capa",
+                fontSize = 11.5.sp,
                 color = Color.LightGray,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 4.dp)
+                modifier = Modifier.padding(top = 2.dp)
             )
         }
 
-        // BOTAO PRINCIPAL DE UNICA OPCAO: ESPELHAR TELA NA CAPA
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // OS 2 BOTÕES DE CONTROLE
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(vertical = 24.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Box(
+            // ----------------------------------------------------
+            // BOTÃO 1: ESPELHAR TELA PRINCIPAL NA CAPA
+            // ----------------------------------------------------
+            Row(
                 modifier = Modifier
-                    .size(180.dp)
-                    .clip(CircleShape)
-                    .background(
-                        Brush.radialGradient(
-                            colors = listOf(
-                                buttonColor.copy(alpha = 0.35f),
-                                Color.Transparent
-                            )
-                        )
-                    )
-                    .border(3.dp, buttonColor, CircleShape)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color(0xFF0F1726))
+                    .border(2.dp, button1Color, RoundedCornerShape(16.dp))
                     .clickable {
                         triggerHaptic()
                         isMirroringActive = !isMirroringActive
 
                         if (isMirroringActive) {
-                            CoverMirrorService.startMirroring(context)
+                            CoverMirrorService.startMirroring(context, keepCoverOnWhenOpened)
+                        } else {
+                            CoverMirrorService.stopMirroring(context)
+                        }
+                    }
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(44.dp)
+                            .clip(CircleShape)
+                            .background(button1Color.copy(alpha = 0.2f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = if (isMirroringActive) "⏸" else "🖥️",
+                            fontSize = 22.sp
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    Column {
+                        Text(
+                            text = "1. ESPELHAR TELA NA CAPA",
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Black,
+                            color = Color.White
+                        )
+                        Text(
+                            text = if (isMirroringActive) "▶ Espelhamento Ativo" else "Toque para transmitir tela principal na capa",
+                            fontSize = 10.sp,
+                            color = Color.Gray
+                        )
+                    }
+                }
+
+                Switch(
+                    checked = isMirroringActive,
+                    onCheckedChange = {
+                        triggerHaptic()
+                        isMirroringActive = it
+                        if (isMirroringActive) {
+                            CoverMirrorService.startMirroring(context, keepCoverOnWhenOpened)
                         } else {
                             CoverMirrorService.stopMirroring(context)
                         }
                     },
-                contentAlignment = Alignment.Center
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = if (isMirroringActive) "⏸" else "🖥️",
-                        fontSize = 48.sp
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Color(0xFF00FF66),
+                        checkedTrackColor = Color(0xFF00FF66).copy(alpha = 0.3f)
                     )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(
-                        text = if (isMirroringActive) "PARAR\nESPELHAMENTO" else "ESPELHAR\nTELA NA CAPA",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Black,
-                        color = Color.White,
-                        textAlign = TextAlign.Center
-                    )
-                }
+                )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            // ----------------------------------------------------
+            // BOTÃO 2: MANTER TELA DE CAPA LIGADA QUANDO O Z FLIP FOR ABERTO
+            // ----------------------------------------------------
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color(0xFF0F1726))
+                    .border(2.dp, button2Color, RoundedCornerShape(16.dp))
+                    .clickable {
+                        triggerHaptic()
+                        keepCoverOnWhenOpened = !keepCoverOnWhenOpened
 
-            // Indicador de Status
-            Surface(
-                color = if (isMirroringActive) Color(0xFF00FF66).copy(alpha = 0.15f) else Color(0xFF00F0FF).copy(alpha = 0.15f),
-                shape = RoundedCornerShape(12.dp),
-                border = androidx.compose.foundation.BorderStroke(
-                    1.dp,
-                    if (isMirroringActive) Color(0xFF00FF66) else Color(0xFF00F0FF)
-                )
+                        if (isMirroringActive) {
+                            CoverMirrorService.startMirroring(context, keepCoverOnWhenOpened)
+                        }
+                    }
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
                         modifier = Modifier
-                            .size(10.dp)
+                            .size(44.dp)
                             .clip(CircleShape)
-                            .background(if (isMirroringActive) Color(0xFF00FF66) else Color(0xFF00F0FF))
-                    )
+                            .background(button2Color.copy(alpha = 0.2f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = if (keepCoverOnWhenOpened) "🔒" else "🔓",
+                            fontSize = 22.sp
+                        )
+                    }
 
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(12.dp))
 
-                    Text(
-                        text = if (isMirroringActive) "ESPELHAMENTO ATIVO NA CAPA" else "PRONTO PARA ESPELHAR",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "2. MANTER CAPA LIGADA AO ABRIR",
+                            fontSize = 12.5.sp,
+                            fontWeight = FontWeight.Black,
+                            color = Color.White
+                        )
+                        Text(
+                            text = if (keepCoverOnWhenOpened) "🔥 Impede a tela externa de apagar quando abrir o cel" else "Evita que a tela externa apague ao abrir o Z Flip",
+                            fontSize = 9.5.sp,
+                            color = Color.Gray
+                        )
+                    }
                 }
+
+                Switch(
+                    checked = keepCoverOnWhenOpened,
+                    onCheckedChange = {
+                        triggerHaptic()
+                        keepCoverOnWhenOpened = it
+                        if (isMirroringActive) {
+                            CoverMirrorService.startMirroring(context, keepCoverOnWhenOpened)
+                        }
+                    },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Color(0xFFFFD700),
+                        checkedTrackColor = Color(0xFFFFD700).copy(alpha = 0.3f)
+                    )
+                )
             }
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Indicador de Status dos 2 Recurso
+        Surface(
+            color = if (isMirroringActive) Color(0xFF00FF66).copy(alpha = 0.15f) else Color(0xFF00F0FF).copy(alpha = 0.15f),
+            shape = RoundedCornerShape(12.dp),
+            border = androidx.compose.foundation.BorderStroke(
+                1.dp,
+                if (isMirroringActive) Color(0xFF00FF66) else Color(0xFF00F0FF)
+            ),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier.padding(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = if (isMirroringActive) "▶ ESPELHAMENTO EM EXECUÇÃO" else "⏸ PRONTO PARA ESPELHAR",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+
+                Text(
+                    text = if (keepCoverOnWhenOpened) "🔥 MODO CAPA LIGADA AO ABRIR O CELULAR: [ATIVADO]" else "❄️ MODO PADRÃO DE DESLIGAMENTO: [PADRÃO]",
+                    fontSize = 10.sp,
+                    color = if (keepCoverOnWhenOpened) Color(0xFFFFD700) else Color.LightGray,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Rodapé de Informações Técnicas e Apoio
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 8.dp)
         ) {
             Text(
                 text = if (hasCoverDisplay) "✓ Tela de Capa Z Flip Detectada" else "ℹ️ Compatível com Galaxy Z Flip 5 / 6 / 7",
-                fontSize = 11.sp,
+                fontSize = 10.5.sp,
                 color = Color.Gray
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Button(
                 onClick = {
@@ -230,13 +344,13 @@ fun ZFlipMirrorScreen() {
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(44.dp)
+                    .height(42.dp)
             ) {
                 Text(
                     text = "Apoiar Criador via PayPal",
                     color = Color(0xFF003087),
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
+                    fontSize = 13.sp
                 )
             }
         }
