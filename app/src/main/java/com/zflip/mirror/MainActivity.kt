@@ -12,6 +12,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -26,15 +27,18 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -114,42 +118,55 @@ fun ZFlipMirrorScreen() {
                 )
             )
             .verticalScroll(rememberScrollState())
-            .padding(20.dp),
+            .padding(18.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        // Cabeçalho Principal
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(top = 8.dp)
+        // Cabeçalho Principal com Logo Personalizada do App
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(top = 6.dp)
         ) {
-            Text(
-                text = "📱 ZFLIP COVER MIRROR",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Black,
-                color = Color(0xFF00F0FF),
-                letterSpacing = 2.sp
+            Image(
+                painter = painterResource(id = R.drawable.ic_zflip_logo),
+                contentDescription = "ZFlip Cover Mirror Logo",
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(CircleShape)
+                    .border(1.5.dp, Color(0xFF00F0FF), CircleShape),
+                contentScale = ContentScale.Crop
             )
 
-            Text(
-                text = "Espelhamento Touch Direto e Zoom por Pinça na Capa",
-                fontSize = 11.5.sp,
-                color = Color.LightGray,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 2.dp)
-            )
+            Spacer(modifier = Modifier.width(10.dp))
+
+            Column {
+                Text(
+                    text = "ZFLIP COVER MIRROR",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Black,
+                    color = Color(0xFF00F0FF),
+                    letterSpacing = 1.5.sp
+                )
+
+                Text(
+                    text = "Espelhamento Touch Direto e Zoom na Capa",
+                    fontSize = 10.5.sp,
+                    color = Color.LightGray
+                )
+            }
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
-        // CAIXA DE VISUALIZAÇÃO INTERATIVA COM ZOOM POR PINÇA (PINCH-TO-ZOOM) E TOUCH MAPEADO 1:1
+        // CAIXA DE PRÉVIA & ZOOM POR PINÇA (PINCH-TO-ZOOM) ENQUADRADA
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(180.dp)
-                .clip(RoundedCornerShape(16.dp))
+                .height(170.dp)
+                .clip(RoundedCornerShape(14.dp))
                 .background(Color(0xFF070B14))
-                .border(2.dp, if (zoomScale > 1.05f) Color(0xFFFFD700) else Color(0xFF00F0FF), RoundedCornerShape(16.dp))
+                .border(2.dp, if (zoomScale > 1.05f) Color(0xFFFFD700) else Color(0xFF00F0FF), RoundedCornerShape(14.dp))
                 .pointerInput(Unit) {
                     detectTransformGestures { _, pan, zoom, _ ->
                         val newScale = (zoomScale * zoom).coerceIn(1.0f, 4.0f)
@@ -189,20 +206,20 @@ fun ZFlipMirrorScreen() {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(12.dp)
+                    modifier = Modifier.padding(10.dp)
                 ) {
                     Text(
-                        text = if (isMirroringActive) "📱 ESPELHAMENTO TOUCH ATIVO" else "🔍 ÁREA DE PRÉVIA & ZOOM",
-                        fontSize = 14.sp,
+                        text = if (isMirroringActive) "📱 ESPELHAMENTO TOUCH ATIVO" else "🔍 PRÉVIA & ZOOM POR PINÇA",
+                        fontSize = 13.5.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
 
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
-                        text = "• Mapeamento de Touch 1:1 Calibrado nos Locais Certos\n• Faça gesto de PINÇA (2 dedos) para dar Zoom (${"%.1f".format(zoomScale)}x)\n• Toque duplo para resetar o Zoom",
-                        fontSize = 10.5.sp,
+                        text = "• Touch 1:1 Calibrado nos Locais Certos\n• Faça PINÇA (2 dedos) para Zoom (${"%.1f".format(zoomScale)}x)\n• Toque duplo reseta o Zoom",
+                        fontSize = 10.sp,
                         color = Color(0xFF00F0FF),
                         textAlign = TextAlign.Center
                     )
@@ -212,14 +229,14 @@ fun ZFlipMirrorScreen() {
             if (zoomScale > 1.05f) {
                 Surface(
                     color = Color(0xFFFFD700),
-                    shape = RoundedCornerShape(8.dp),
+                    shape = RoundedCornerShape(6.dp),
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(8.dp)
                 ) {
                     Text(
                         text = "ZOOM ${"%.1f".format(zoomScale)}x",
-                        fontSize = 10.sp,
+                        fontSize = 9.5.sp,
                         fontWeight = FontWeight.Black,
                         color = Color.Black,
                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
@@ -228,21 +245,21 @@ fun ZFlipMirrorScreen() {
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(14.dp))
 
-        // OS 2 BOTÕES DE CONTROLE
+        // OS 2 BOTÕES DE CONTROLE VIBRANTES
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
             // BOTÃO 1: ESPELHAR TELA PRINCIPAL NA CAPA
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(14.dp))
+                    .clip(RoundedCornerShape(12.dp))
                     .background(Color(0xFF0F1726))
-                    .border(2.dp, button1Color, RoundedCornerShape(14.dp))
+                    .border(2.dp, button1Color, RoundedCornerShape(12.dp))
                     .clickable {
                         triggerHaptic()
                         isMirroringActive = !isMirroringActive
@@ -253,21 +270,21 @@ fun ZFlipMirrorScreen() {
                             CoverMirrorService.stopMirroring(context)
                         }
                     }
-                    .padding(14.dp),
+                    .padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
                         modifier = Modifier
-                            .size(40.dp)
+                            .size(38.dp)
                             .clip(CircleShape)
                             .background(button1Color.copy(alpha = 0.2f)),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = if (isMirroringActive) "⏸" else "🖥️",
-                            fontSize = 20.sp
+                            fontSize = 18.sp
                         )
                     }
 
@@ -276,13 +293,13 @@ fun ZFlipMirrorScreen() {
                     Column {
                         Text(
                             text = "1. ESPELHAR TELA NA CAPA",
-                            fontSize = 12.5.sp,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Black,
                             color = Color.White
                         )
                         Text(
                             text = if (isMirroringActive) "▶ Espelhamento Touch 1:1 Ativo" else "Transmita a tela grande na capa",
-                            fontSize = 9.5.sp,
+                            fontSize = 9.sp,
                             color = Color.Gray
                         )
                     }
@@ -310,9 +327,9 @@ fun ZFlipMirrorScreen() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(14.dp))
+                    .clip(RoundedCornerShape(12.dp))
                     .background(Color(0xFF0F1726))
-                    .border(2.dp, button2Color, RoundedCornerShape(14.dp))
+                    .border(2.dp, button2Color, RoundedCornerShape(12.dp))
                     .clickable {
                         triggerHaptic()
                         keepCoverOnWhenOpened = !keepCoverOnWhenOpened
@@ -321,21 +338,21 @@ fun ZFlipMirrorScreen() {
                             CoverMirrorService.startMirroring(context, keepCoverOnWhenOpened)
                         }
                     }
-                    .padding(14.dp),
+                    .padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
                         modifier = Modifier
-                            .size(40.dp)
+                            .size(38.dp)
                             .clip(CircleShape)
                             .background(button2Color.copy(alpha = 0.2f)),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = if (keepCoverOnWhenOpened) "🔒" else "🔓",
-                            fontSize = 20.sp
+                            fontSize = 18.sp
                         )
                     }
 
@@ -344,13 +361,13 @@ fun ZFlipMirrorScreen() {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = "2. MANTER CAPA LIGADA AO ABRIR",
-                            fontSize = 12.sp,
+                            fontSize = 11.5.sp,
                             fontWeight = FontWeight.Black,
                             color = Color.White
                         )
                         Text(
                             text = if (keepCoverOnWhenOpened) "🔥 Impede a tela externa de apagar quando abrir" else "Evita que a tela externa apague ao abrir",
-                            fontSize = 9.5.sp,
+                            fontSize = 9.sp,
                             color = Color.Gray
                         )
                     }
@@ -373,12 +390,12 @@ fun ZFlipMirrorScreen() {
             }
         }
 
-        Spacer(modifier = Modifier.height(14.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
-        // Indicador de Status dos Recursos
+        // Indicador de Status & Eficiência de Bateria
         Surface(
             color = if (isMirroringActive) Color(0xFF00FF66).copy(alpha = 0.15f) else Color(0xFF00F0FF).copy(alpha = 0.15f),
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(10.dp),
             border = androidx.compose.foundation.BorderStroke(
                 1.dp,
                 if (isMirroringActive) Color(0xFF00FF66) else Color(0xFF00F0FF)
@@ -386,40 +403,40 @@ fun ZFlipMirrorScreen() {
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier.padding(10.dp),
+                modifier = Modifier.padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = if (isMirroringActive) "▶ ESPELHAMENTO TOUCH & ZOOM 1:1 ATIVO" else "⏸ PRONTO PARA ESPELHAR",
-                    fontSize = 11.5.sp,
+                    fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
 
                 Text(
-                    text = if (keepCoverOnWhenOpened) "🔥 MODO CAPA LIGADA AO ABRIR: [ATIVADO]" else "❄️ MODO PADRÃO DE DESLIGAMENTO: [PADRÃO]",
-                    fontSize = 9.5.sp,
-                    color = if (keepCoverOnWhenOpened) Color(0xFFFFD700) else Color.LightGray,
+                    text = if (keepCoverOnWhenOpened) "🔥 MODO CAPA LIGADA AO ABRIR: [ATIVADO]" else "⚡ EFICIÊNCIA DE BATERIA OTIMIZADA [100% OK]",
+                    fontSize = 9.sp,
+                    color = if (keepCoverOnWhenOpened) Color(0xFFFFD700) else Color(0xFF00FF66),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = 2.dp)
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(14.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         // Rodapé de Apoio
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(bottom = 6.dp)
+            modifier = Modifier.padding(bottom = 4.dp)
         ) {
             Text(
                 text = if (hasCoverDisplay) "✓ Tela de Capa Z Flip Detectada" else "ℹ️ Compatível com Galaxy Z Flip 5 / 6 / 7",
-                fontSize = 10.sp,
+                fontSize = 9.5.sp,
                 color = Color.Gray
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Button(
                 onClick = {
@@ -433,16 +450,16 @@ fun ZFlipMirrorScreen() {
                     } catch (_: Exception) {}
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC439)),
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp)
+                    .height(38.dp)
             ) {
                 Text(
                     text = "Apoiar Criador via PayPal",
                     color = Color(0xFF003087),
                     fontWeight = FontWeight.Bold,
-                    fontSize = 12.5.sp
+                    fontSize = 12.sp
                 )
             }
         }

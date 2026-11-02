@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="128dp"
+    android:height="128dp"
+    android:viewportWidth="128"
+    android:viewportHeight="128">
+
+    <!-- Outer Neon Circular Glow -->
+    <path
+        android:fillColor="#0F172A"
+        android:pathData="M64,64m-60,0a60,60 0 1,0 120,0a60,60 0 1,0 -120,0" />
+
+    <!-- Outer Ring Gradient -->
+    <path
+        android:fillColor="#00F0FF"
+        android:pathData="M64,8A56,56 0 1,1 63.9,8 Z" />
+
+    <path
+        android:fillColor="#0A0E17"
+        android:pathData="M64,14A50,50 0 1,1 63.9,14 Z" />
+
+    <!-- Z Flip Foldable Outer Cover Screen Vector Shape -->
+    <path
+        android:fillColor="#00FF66"
+        android:pathData="M38,32 H90 A10,10 0 0,1 100,42 V86 A10,10 0 0,1 90,96 H38 A10,10 0 0,1 28,86 V42 A10,10 0 0,1 38,32 Z" />
+
+    <path
+        android:fillColor="#0F1726"
+        android:pathData="M42,36 H86 A6,6 0 0,1 92,42 V82 A6,6 0 0,1 86,88 H42 A6,6 0 0,1 36,82 V42 A6,6 0 0,1 42,36 Z" />
+
+    <!-- Screen Mirror Arrows Vector -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M52,50 L76,64 L52,78 Z" />
+
+</vector>
