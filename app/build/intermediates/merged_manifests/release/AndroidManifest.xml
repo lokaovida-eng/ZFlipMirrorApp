@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lokaovida.zflip.covermirror"
-    android:versionCode="30"
-    android:versionName="3.0" >
+    android:versionCode="40"
+    android:versionName="4.0" >
 
     <uses-sdk
         android:minSdkVersion="26"
@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <permission
         android:name="com.lokaovida.zflip.covermirror.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
@@ -44,7 +43,7 @@
             android:exported="false" />
         <service
             android:name="com.zflip.mirror.ZFlipAccessibilityService"
-            android:exported="true"
+            android:exported="false"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />

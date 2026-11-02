@@ -1,8 +1,8 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.lokaovida.zflip.covermirror"
-4    android:versionCode="30"
-5    android:versionName="3.0" >
+4    android:versionCode="40"
+5    android:versionName="4.0" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="26"
@@ -20,150 +20,147 @@
 14    <uses-permission android:name="android.permission.WAKE_LOCK" />
 14-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:7:5-68
 14-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:7:22-65
-15    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-15-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:8:5-95
-15-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:8:22-92
-16
-17    <permission
-17-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
-18        android:name="com.lokaovida.zflip.covermirror.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-18-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
-19        android:protectionLevel="signature" />
-19-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
-20
-21    <uses-permission android:name="com.lokaovida.zflip.covermirror.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-21-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
-21-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
-22
-23    <application
-23-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:10:5-42:19
-24        android:allowBackup="true"
-24-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:11:9-35
-25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-25-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
-26        android:extractNativeLibs="false"
-27        android:icon="@drawable/ic_zflip_logo"
-27-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:12:9-47
-28        android:label="ZFlip Cover Mirror"
-28-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:13:9-43
-29        android:supportsRtl="true"
-29-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:14:9-35
-30        android:theme="@android:style/Theme.DeviceDefault.NoActionBar" >
-30-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:15:9-71
-31        <activity
-31-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:17:9-25:20
-32            android:name="com.zflip.mirror.MainActivity"
-32-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:18:13-57
-33            android:exported="true"
-33-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:19:13-36
-34            android:screenOrientation="portrait" >
-34-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:20:13-49
-35            <intent-filter>
-35-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:21:13-24:29
-36                <action android:name="android.intent.action.MAIN" />
-36-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:22:17-69
-36-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:22:25-66
-37
-38                <category android:name="android.intent.category.LAUNCHER" />
-38-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:23:17-77
-38-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:23:27-74
-39            </intent-filter>
-40        </activity>
-41
-42        <service
-42-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:27:9-29:40
-43            android:name="com.zflip.mirror.CoverMirrorService"
-43-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:28:13-63
-44            android:exported="false" />
-44-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:29:13-37
-45        <service
-45-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:31:9-41:19
-46            android:name="com.zflip.mirror.ZFlipAccessibilityService"
-46-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:32:13-70
-47            android:exported="true"
-47-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:34:13-36
-48            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
-48-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:33:13-79
-49            <intent-filter>
-49-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:35:13-37:29
-50                <action android:name="android.accessibilityservice.AccessibilityService" />
-50-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:36:17-92
-50-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:36:25-89
-51            </intent-filter>
-52
-53            <meta-data
-53-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:38:13-40:72
-54                android:name="android.accessibilityservice"
-54-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:39:17-60
-55                android:resource="@xml/accessibility_service_config" />
-55-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:40:17-69
-56        </service>
-57
-58        <provider
-58-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
-59            android:name="androidx.startup.InitializationProvider"
-59-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:25:13-67
-60            android:authorities="com.lokaovida.zflip.covermirror.androidx-startup"
-60-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:26:13-68
-61            android:exported="false" >
-61-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:27:13-37
-62            <meta-data
-62-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
-63                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-63-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:30:17-75
-64                android:value="androidx.startup" />
-64-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:31:17-49
-65            <meta-data
-65-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/deck/.gradle/caches/transforms-3/42f25a6ff299b5b692ea456348779cb8/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
-66                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-66-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/deck/.gradle/caches/transforms-3/42f25a6ff299b5b692ea456348779cb8/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
-67                android:value="androidx.startup" />
-67-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/deck/.gradle/caches/transforms-3/42f25a6ff299b5b692ea456348779cb8/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
-68            <meta-data
-68-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
-69                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-69-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
-70                android:value="androidx.startup" />
-70-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
-71        </provider>
-72
-73        <receiver
-73-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
-74            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-74-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
-75            android:directBootAware="false"
-75-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
-76            android:enabled="true"
-76-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
-77            android:exported="true"
-77-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
-78            android:permission="android.permission.DUMP" >
-78-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
-79            <intent-filter>
-79-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
-80                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-80-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
-80-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
-81            </intent-filter>
-82            <intent-filter>
-82-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
-83                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-83-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
-83-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
-84            </intent-filter>
-85            <intent-filter>
-85-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
-86                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-86-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
-86-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
-87            </intent-filter>
-88            <intent-filter>
-88-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
-89                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-89-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
-89-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
-90            </intent-filter>
-91        </receiver>
-92    </application>
-93
-94</manifest>
+15
+16    <permission
+16-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+17        android:name="com.lokaovida.zflip.covermirror.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+17-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+18        android:protectionLevel="signature" />
+18-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+19
+20    <uses-permission android:name="com.lokaovida.zflip.covermirror.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+20-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+20-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+21
+22    <application
+22-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:9:5-41:19
+23        android:allowBackup="true"
+23-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:10:9-35
+24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+24-->[androidx.core:core:1.12.0] /home/deck/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+25        android:extractNativeLibs="false"
+26        android:icon="@drawable/ic_zflip_logo"
+26-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:11:9-47
+27        android:label="ZFlip Cover Mirror"
+27-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:12:9-43
+28        android:supportsRtl="true"
+28-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:13:9-35
+29        android:theme="@android:style/Theme.DeviceDefault.NoActionBar" >
+29-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:14:9-71
+30        <activity
+30-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:16:9-24:20
+31            android:name="com.zflip.mirror.MainActivity"
+31-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:17:13-57
+32            android:exported="true"
+32-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:18:13-36
+33            android:screenOrientation="portrait" >
+33-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:19:13-49
+34            <intent-filter>
+34-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:20:13-23:29
+35                <action android:name="android.intent.action.MAIN" />
+35-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:21:17-69
+35-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:21:25-66
+36
+37                <category android:name="android.intent.category.LAUNCHER" />
+37-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:22:17-77
+37-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:22:27-74
+38            </intent-filter>
+39        </activity>
+40
+41        <service
+41-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:26:9-28:40
+42            android:name="com.zflip.mirror.CoverMirrorService"
+42-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:27:13-63
+43            android:exported="false" />
+43-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:28:13-37
+44        <service
+44-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:30:9-40:19
+45            android:name="com.zflip.mirror.ZFlipAccessibilityService"
+45-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:31:13-70
+46            android:exported="false"
+46-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:33:13-37
+47            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+47-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:32:13-79
+48            <intent-filter>
+48-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:34:13-36:29
+49                <action android:name="android.accessibilityservice.AccessibilityService" />
+49-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:35:17-92
+49-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:35:25-89
+50            </intent-filter>
+51
+52            <meta-data
+52-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:37:13-39:72
+53                android:name="android.accessibilityservice"
+53-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:38:17-60
+54                android:resource="@xml/accessibility_service_config" />
+54-->/home/deck/Projects/ZFlipMirrorApp/app/src/main/AndroidManifest.xml:39:17-69
+55        </service>
+56
+57        <provider
+57-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+58            android:name="androidx.startup.InitializationProvider"
+58-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:25:13-67
+59            android:authorities="com.lokaovida.zflip.covermirror.androidx-startup"
+59-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:26:13-68
+60            android:exported="false" >
+60-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:27:13-37
+61            <meta-data
+61-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+62                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+62-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:30:17-75
+63                android:value="androidx.startup" />
+63-->[androidx.emoji2:emoji2:1.3.0] /home/deck/.gradle/caches/transforms-3/b3f83be938126097af9e0c3301c85666/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:31:17-49
+64            <meta-data
+64-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/deck/.gradle/caches/transforms-3/42f25a6ff299b5b692ea456348779cb8/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+65                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+65-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/deck/.gradle/caches/transforms-3/42f25a6ff299b5b692ea456348779cb8/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+66                android:value="androidx.startup" />
+66-->[androidx.lifecycle:lifecycle-process:2.6.1] /home/deck/.gradle/caches/transforms-3/42f25a6ff299b5b692ea456348779cb8/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+67            <meta-data
+67-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+68                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+68-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+69                android:value="androidx.startup" />
+69-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+70        </provider>
+71
+72        <receiver
+72-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+73            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+73-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+74            android:directBootAware="false"
+74-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+75            android:enabled="true"
+75-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+76            android:exported="true"
+76-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+77            android:permission="android.permission.DUMP" >
+77-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+78            <intent-filter>
+78-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+79                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+79-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+79-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+80            </intent-filter>
+81            <intent-filter>
+81-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+82                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+82-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+82-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+83            </intent-filter>
+84            <intent-filter>
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+85                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+85-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+85-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+86            </intent-filter>
+87            <intent-filter>
+87-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+88                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+88-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+88-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/deck/.gradle/caches/transforms-3/2f8f7113c8f8b718a6e90d73920ac3ef/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+89            </intent-filter>
+90        </receiver>
+91    </application>
+92
+93</manifest>
