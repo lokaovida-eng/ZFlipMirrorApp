@@ -13,8 +13,8 @@ android {
         applicationId = "com.lokaovida.zflip.covermirror"
         minSdk = 26
         targetSdk = 34
-        versionCode = 40
-        versionName = "4.0"
+        versionCode = 50
+        versionName = "5.0"
     }
 
     signingConfigs {
