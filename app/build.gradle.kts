@@ -6,15 +6,15 @@ plugins {
 }
 
 android {
-    namespace = "com.lokaovida.zflip.covermirror"
+    namespace = "com.zflip.mirror"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.lokaovida.zflip.covermirror"
+        applicationId = "com.zflip.mirror"
         minSdk = 26
         targetSdk = 34
-        versionCode = 50
-        versionName = "5.0"
+        versionCode = 100
+        versionName = "1.0.0"
     }
 
     signingConfigs {
@@ -25,8 +25,8 @@ android {
             keyPassword = "zflip123"
             enableV1Signing = true
             enableV2Signing = true
-            enableV3Signing = true
-            enableV4Signing = true
+            enableV3Signing = false
+            enableV4Signing = false
         }
     }
 

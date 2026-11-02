@@ -1,4 +1,4 @@
-com.lokaovida.zflip.covermirror
+com.zflip.mirror
 attr alpha
 attr font
 attr fontProviderAuthority

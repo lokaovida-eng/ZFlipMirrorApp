@@ -1,6 +1,5 @@
 package com.zflip.mirror
 
-import com.lokaovida.zflip.covermirror.R
 import android.content.Context
 import android.content.Intent
 import android.hardware.display.DisplayManager

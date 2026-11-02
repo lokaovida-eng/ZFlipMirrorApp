@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.lokaovida.zflip.covermirror.app-mergeReleaseResources-38:/values/values.xml",
+            "outputFile": "com.zflip.mirror.app-mergeReleaseResources-38:/values/values.xml",
             "map": [
                 {
                     "source": "/home/deck/.gradle/caches/transforms-3/4b3f35c43c08e44fa1636ee42373771b/transformed/lifecycle-runtime-2.6.1/res/values/values.xml",

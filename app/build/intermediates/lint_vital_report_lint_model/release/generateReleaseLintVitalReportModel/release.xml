@@ -1,6 +1,6 @@
 <variant
     name="release"
-    package="com.lokaovida.zflip.covermirror"
+    package="com.zflip.mirror"
     minSdkVersion="26"
     targetSdkVersion="34"
     mergedManifest="build/intermediates/merged_manifest/release/AndroidManifest.xml"
@@ -23,7 +23,7 @@
   <artifact
       classOutputs="build/intermediates/javac/release/classes:build/tmp/kotlin-classes/release:build/kotlinToolingMetadata:build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/release/R.jar"
       type="MAIN"
-      applicationId="com.lokaovida.zflip.covermirror"
+      applicationId="com.zflip.mirror"
       generatedSourceFolders="build/generated/ap_generated_sources/release/out"
       generatedResourceFolders="build/generated/res/resValues/release"
       desugaredMethodsFiles="/home/deck/.gradle/caches/transforms-3/9800946bb6bb399df0a0c9d35948c37c/transformed/D8BackportedDesugaredMethods.txt">

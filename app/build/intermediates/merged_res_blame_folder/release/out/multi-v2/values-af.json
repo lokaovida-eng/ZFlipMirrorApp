@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.lokaovida.zflip.covermirror.app-mergeReleaseResources-38:/values-af/values-af.xml",
+            "outputFile": "com.zflip.mirror.app-mergeReleaseResources-38:/values-af/values-af.xml",
             "map": [
                 {
                     "source": "/home/deck/.gradle/caches/transforms-3/20c551fa2b2024ee6d0a058a02f58ea8/transformed/jetified-foundation-release/res/values-af/values-af.xml",
