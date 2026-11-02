@@ -49,9 +49,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         try {
             enableEdgeToEdge()
-        } catch (_: Exception) {}
+        } catch (_: Throwable) {}
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        // Impede que a tela apague e mantém ativa
+        window.addFlags(
+            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
+            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+            WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+        )
 
         setContent {
             MaterialTheme {
@@ -59,7 +64,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color(0xFF0A0E17)
                 ) {
-                    ZFlipMirrorScreen()
+                    ZFlipMirrorScreen(
+                        onKeepCoverOnToggle = { keepOn ->
+                            try {
+                                if (keepOn) {
+                                    window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                                }
+                            } catch (e: Throwable) {
+                                e.printStackTrace()
+                            }
+                        }
+                    )
                 }
             }
         }
@@ -67,7 +82,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ZFlipMirrorScreen() {
+fun ZFlipMirrorScreen(
+    onKeepCoverOnToggle: (Boolean) -> Unit = {}
+) {
     val context = LocalContext.current
     val haptics = LocalHapticFeedback.current
 
@@ -77,9 +94,6 @@ fun ZFlipMirrorScreen() {
     // Botão 2: Manter a Tela de Capa Ligada quando o Z Flip for ABERTO
     var keepCoverOnWhenOpened by remember { mutableStateOf(false) }
 
-    // Botão 3: Estado do Serviço de Multitarefas
-    var isRecentsActive by remember { mutableStateOf(false) }
-
     // Estado do Pinch-to-Zoom
     var zoomScale by remember { mutableFloatStateOf(1.0f) }
     var zoomOffset by remember { mutableStateOf(Offset.Zero) }
@@ -87,15 +101,23 @@ fun ZFlipMirrorScreen() {
     fun triggerHaptic() {
         try {
             haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-        } catch (_: Exception) {}
+        } catch (_: Throwable) {}
     }
 
     val displayManager = remember {
-        context.getSystemService(Context.DISPLAY_SERVICE) as? DisplayManager
+        try {
+            context.getSystemService(Context.DISPLAY_SERVICE) as? DisplayManager
+        } catch (_: Throwable) {
+            null
+        }
     }
 
     val displays = remember {
-        displayManager?.getDisplays(DisplayManager.DISPLAY_CATEGORY_PRESENTATION) ?: emptyArray()
+        try {
+            displayManager?.getDisplays(DisplayManager.DISPLAY_CATEGORY_PRESENTATION) ?: emptyArray()
+        } catch (_: Throwable) {
+            emptyArray()
+        }
     }
 
     val hasCoverDisplay = displays.isNotEmpty()
@@ -110,12 +132,6 @@ fun ZFlipMirrorScreen() {
         targetValue = if (keepCoverOnWhenOpened) Color(0xFFFFD700) else Color(0xFFFF3366),
         animationSpec = tween(durationMillis = 300),
         label = "Button2ColorAnim"
-    )
-
-    val button3Color by animateColorAsState(
-        targetValue = if (isRecentsActive) Color(0xFF00FF66) else Color(0xFFFF007F),
-        animationSpec = tween(durationMillis = 300),
-        label = "Button3ColorAnim"
     )
 
     Column(
@@ -256,7 +272,7 @@ fun ZFlipMirrorScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // OS 3 BOTÕES DE CONTROLE
+        // OS BOTÕES DE CONTROLE
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -342,6 +358,7 @@ fun ZFlipMirrorScreen() {
                     .clickable {
                         triggerHaptic()
                         keepCoverOnWhenOpened = !keepCoverOnWhenOpened
+                        onKeepCoverOnToggle(keepCoverOnWhenOpened)
 
                         if (isMirroringActive) {
                             CoverMirrorService.startMirroring(context, keepCoverOnWhenOpened)
@@ -375,7 +392,7 @@ fun ZFlipMirrorScreen() {
                             color = Color.White
                         )
                         Text(
-                            text = if (keepCoverOnWhenOpened) "🔥 Impede a tela externa de apagar" else "Evita que a tela externa apague ao abrir",
+                            text = if (keepCoverOnWhenOpened) "🔥 Tela externa fica acesa quando o Z Flip abre" else "Evita que a tela externa apague ao abrir",
                             fontSize = 8.5.sp,
                             color = Color.Gray
                         )
@@ -387,6 +404,8 @@ fun ZFlipMirrorScreen() {
                     onCheckedChange = {
                         triggerHaptic()
                         keepCoverOnWhenOpened = it
+                        onKeepCoverOnToggle(keepCoverOnWhenOpened)
+
                         if (isMirroringActive) {
                             CoverMirrorService.startMirroring(context, keepCoverOnWhenOpened)
                         }
@@ -396,73 +415,6 @@ fun ZFlipMirrorScreen() {
                         checkedTrackColor = Color(0xFFFFD700).copy(alpha = 0.3f)
                     )
                 )
-            }
-
-            // BOTÃO 3 (NOVO): MULTITAREFAS / VER APPS ABERTOS NA CAPA
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFF0F1726))
-                    .border(2.dp, button3Color, RoundedCornerShape(12.dp))
-                    .clickable {
-                        triggerHaptic()
-                        val success = ZFlipAccessibilityService.openRecents(context)
-                        isRecentsActive = success
-                    }
-                    .padding(10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(
-                        modifier = Modifier
-                            .size(36.dp)
-                            .clip(CircleShape)
-                            .background(button3Color.copy(alpha = 0.2f)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "📱",
-                            fontSize = 16.sp
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = "3. MULTITAREFAS NA CAPA (APPS ABERTOS)",
-                            fontSize = 10.5.sp,
-                            fontWeight = FontWeight.Black,
-                            color = Color.White
-                        )
-                        Text(
-                            text = "Abre o alternador de apps abertos na tela externa",
-                            fontSize = 8.5.sp,
-                            color = Color.Gray
-                        )
-                    }
-                }
-
-                Button(
-                    onClick = {
-                        triggerHaptic()
-                        val success = ZFlipAccessibilityService.openRecents(context)
-                        isRecentsActive = success
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF007F)),
-                    shape = RoundedCornerShape(8.dp),
-                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
-                    modifier = Modifier.height(28.dp)
-                ) {
-                    Text(
-                        text = "ABRIR",
-                        fontSize = 9.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
-                }
             }
         }
 
@@ -523,7 +475,7 @@ fun ZFlipMirrorScreen() {
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         }
                         context.startActivity(intent)
-                    } catch (_: Exception) {}
+                    } catch (_: Throwable) {}
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC439)),
                 shape = RoundedCornerShape(8.dp),

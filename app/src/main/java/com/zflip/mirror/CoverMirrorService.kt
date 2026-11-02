@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
@@ -29,12 +28,8 @@ class CoverMirrorService : Service() {
             .build()
 
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
-            } else {
-                startForeground(NOTIFICATION_ID, notification)
-            }
-        } catch (e: Exception) {
+            startForeground(NOTIFICATION_ID, notification)
+        } catch (e: Throwable) {
             e.printStackTrace()
         }
 
@@ -51,16 +46,15 @@ class CoverMirrorService : Service() {
         try {
             if (wakeLock == null) {
                 val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
-                @Suppress("DEPRECATION")
                 wakeLock = powerManager.newWakeLock(
-                    PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP,
+                    PowerManager.PARTIAL_WAKE_LOCK,
                     "ZFlipMirrorApp:KeepCoverOnWakeLock"
                 )
             }
             if (wakeLock?.isHeld == false) {
                 wakeLock?.acquire(12 * 60 * 60 * 1000L)
             }
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             e.printStackTrace()
         }
     }
@@ -70,7 +64,7 @@ class CoverMirrorService : Service() {
             if (wakeLock?.isHeld == true) {
                 wakeLock?.release()
             }
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             e.printStackTrace()
         }
     }
@@ -107,7 +101,7 @@ class CoverMirrorService : Service() {
                 } else {
                     context.startService(intent)
                 }
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 e.printStackTrace()
             }
         }
@@ -116,7 +110,7 @@ class CoverMirrorService : Service() {
             try {
                 val intent = Intent(context, CoverMirrorService::class.java)
                 context.stopService(intent)
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
                 e.printStackTrace()
             }
         }
