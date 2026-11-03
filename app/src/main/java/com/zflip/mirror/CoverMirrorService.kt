@@ -5,14 +5,17 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.hardware.display.DisplayManager
 import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
+import android.view.Display
 import androidx.core.app.NotificationCompat
 
 class CoverMirrorService : Service() {
 
     private var wakeLock: PowerManager.WakeLock? = null
+    private var coverPresentation: CoverPresentation? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -33,6 +36,9 @@ class CoverMirrorService : Service() {
             e.printStackTrace()
         }
 
+        // Ativa a Janela de Apresentação na Tela de Capa Externa do Galaxy Z Flip
+        showCoverPresentation(keepCoverOn)
+
         if (keepCoverOn) {
             acquireWakeLock()
         } else {
@@ -40,6 +46,30 @@ class CoverMirrorService : Service() {
         }
 
         return START_STICKY
+    }
+
+    private fun showCoverPresentation(keepCoverOn: Boolean) {
+        try {
+            val displayManager = getSystemService(Context.DISPLAY_SERVICE) as? DisplayManager
+            val displays = displayManager?.getDisplays(DisplayManager.DISPLAY_CATEGORY_PRESENTATION) ?: emptyArray()
+
+            if (displays.isNotEmpty()) {
+                dismissCoverPresentation()
+                coverPresentation = CoverPresentation(this, displays[0], keepCoverOn)
+                coverPresentation?.show()
+            }
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun dismissCoverPresentation() {
+        try {
+            coverPresentation?.dismiss()
+            coverPresentation = null
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }
     }
 
     private fun acquireWakeLock() {
@@ -71,6 +101,7 @@ class CoverMirrorService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        dismissCoverPresentation()
         releaseWakeLock()
     }
 
