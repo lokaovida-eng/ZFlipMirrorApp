@@ -5,8 +5,10 @@ import android.content.Intent
 import android.hardware.display.DisplayManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Display
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -51,7 +53,6 @@ class MainActivity : ComponentActivity() {
             enableEdgeToEdge()
         } catch (_: Throwable) {}
 
-        // Impede que a tela apague e mantém ativa
         window.addFlags(
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
             WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
@@ -102,6 +103,37 @@ fun ZFlipMirrorScreen(
         try {
             haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         } catch (_: Throwable) {}
+    }
+
+    // Função para verificar e solicitar permissão de Aparecer Sobre Outros
+    fun checkAndStartMirroring() {
+        try {
+            if (!Settings.canDrawOverlays(context)) {
+                Toast.makeText(
+                    context,
+                    "Por favor, ative a permissão 'Aparecer sobre outros' para transmitir na capa!",
+                    Toast.LENGTH_LONG
+                ).show()
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:${context.packageName}")
+                ).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(intent)
+            } else {
+                isMirroringActive = !isMirroringActive
+                if (isMirroringActive) {
+                    CoverMirrorService.startMirroring(context, keepCoverOnWhenOpened)
+                    Toast.makeText(context, "▶ Transmissão ativada na Tela de Capa!", Toast.LENGTH_SHORT).show()
+                } else {
+                    CoverMirrorService.stopMirroring(context)
+                    Toast.makeText(context, "⏸ Transmissão pausada", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }
     }
 
     val displayManager = remember {
@@ -287,13 +319,7 @@ fun ZFlipMirrorScreen(
                     .border(2.dp, button1Color, RoundedCornerShape(12.dp))
                     .clickable {
                         triggerHaptic()
-                        isMirroringActive = !isMirroringActive
-
-                        if (isMirroringActive) {
-                            CoverMirrorService.startMirroring(context, keepCoverOnWhenOpened)
-                        } else {
-                            CoverMirrorService.stopMirroring(context)
-                        }
+                        checkAndStartMirroring()
                     }
                     .padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -334,12 +360,7 @@ fun ZFlipMirrorScreen(
                     checked = isMirroringActive,
                     onCheckedChange = {
                         triggerHaptic()
-                        isMirroringActive = it
-                        if (isMirroringActive) {
-                            CoverMirrorService.startMirroring(context, keepCoverOnWhenOpened)
-                        } else {
-                            CoverMirrorService.stopMirroring(context)
-                        }
+                        checkAndStartMirroring()
                     },
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = Color(0xFF00FF66),
